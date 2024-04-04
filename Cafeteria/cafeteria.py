@@ -115,6 +115,32 @@ class TestDrinkInput(unittest.TestCase):
     def test_entrada_con_espacios_extra(self):
         self.assertEqual(drinkInput("  Cafe  , 1 , 2 , 3  "), ("Cafe", [1, 2, 3]))
 
+    def test_entrada_numerica_como_nombre(self):
+        self.assertEqual(drinkInput("1234,1,2"), "Mensaje: El nombre de la bebida debe tener solamente caracteres alfabéticos.")
+    
+    def test_tamano_con_cero_como_entrada(self):
+        self.assertEqual(drinkInput("Latte,0"), "Mensaje: Los tamaños deben ser valores dentro del rango de 1 a 48.")
+
+    def test_tamanos_descendentes(self):
+        self.assertEqual(drinkInput("Latte,10,9,8"), "Mensaje: Los tamaños deben ingresarse en orden ascendente.")
+
+    def test_nombre_con_acentos(self):
+        self.assertEqual(drinkInput("Café,1,2,3"), ("Café", [1, 2, 3]))
+    
+    def test_entrada_con_espacios_antes_de_comas(self):
+        self.assertEqual(drinkInput("Latte , 1 , 2 , 3"), ("Latte", [1, 2, 3]))
+
+    def test_multiples_tamanos_validos(self):
+        self.assertEqual(drinkInput("Mocha,4,8,12,16,20"), ("Mocha", [4, 8, 12, 16, 20]))
+
+    def test_tamano_unico_valido(self):
+        self.assertEqual(drinkInput("FlatWhite,24"), ("FlatWhite", [24]))
+
+    def test_nombre_valido_con_tamanos_al_limite_inferior(self):
+        self.assertEqual(drinkInput("Americano,1"), ("Americano", [1]))
+
+    def test_nombre_valido_con_tamanos_al_limite_superior(self):
+        self.assertEqual(drinkInput("Cappuccino,48"), ("Cappuccino", [48]))
 
 if __name__ == '__main__':
     unittest.main()
